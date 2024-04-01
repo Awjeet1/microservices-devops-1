@@ -24,16 +24,16 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script{
-                    bat 'docker build -t kelvinskell/newsread-customize customize-service/'
-                    bat 'docker build -t kelvinskell/newsread-news news-service/'
+                    bat 'docker build -t awjeet777/newsread-customize customize-service/'
+                    bat 'docker build -t awjeet777/newsread-news news-service/'
             }
         }
     }
         stage('Containerize And Test') {
             steps {
                 script{
-                    bat 'docker run -d  --name customize-service -e FLASK_APP=run.py kelvinskell/newsread-customize && sleep 10 && docker logs customize-service && docker stop customize-service'
-                    bat 'docker run -d  --name news-service -e FLASK_APP=run.py kelvinskell/newsread-news && sleep 10 && docker logs news-service && docker stop news-service'
+                    bat 'docker run -d  --name customize-service -e FLASK_APP=run.py awjeet777/newsread-customize && sleep 10 && docker logs customize-service && docker stop customize-service'
+                    bat 'docker run -d  --name news-service -e FLASK_APP=run.py awjeet777/newsread-news && sleep 10 && docker logs news-service && docker stop news-service'
                 }
             }
         }
@@ -41,8 +41,8 @@ pipeline {
             steps {
                     script{
                         withCredentials([string(credentialsId: 'DockerHubPass', variable: 'DockerHubPass')]) {
-                        bat 'docker login -u kelvinskell --password ${DockerHubPass}' }
-                        bat 'docker push kelvinskell/newsread-news && docker push kelvinskell/newsread-customize'
+                        bat 'docker login -u awjeet777 --password ${DockerHubPass}' }
+                        bat 'docker push awjeet777/newsread-news && docker push awjeet777/newsread-customize'
                }
             }
                  
@@ -51,8 +51,8 @@ pipeline {
         //stage('Trivy scan on Docker images'){
           //  steps{
             //     bat 'TMPDIR=/home/jenkins'
-              //   bat 'trivy image kelvinskell/newsread-news:latest'
-                // bat 'trivy image kelvinskell/newsread-customize:latest'
+              //   bat 'trivy image awjeet777/newsread-news:latest'
+                // bat 'trivy image awjeet777/newsread-customize:latest'
         //}
        
    // }
