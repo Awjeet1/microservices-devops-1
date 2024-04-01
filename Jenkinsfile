@@ -24,8 +24,8 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script{
-                    sh 'docker build -t kelvinskell/newsread-customize customize-service/'
-                    sh 'docker build -t kelvinskell/newsread-news news-service/'
+                    bat 'docker build -t kelvinskell/newsread-customize customize-service/'
+                    bat 'docker build -t kelvinskell/newsread-news news-service/'
             }
         }
     }
