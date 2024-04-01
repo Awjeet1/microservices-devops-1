@@ -16,11 +16,7 @@ pipeline {
           scannerHome = tool 'SonarScanner'
         }
         withSonarQubeEnv('Sonarqube Server') {
-          if (isUnix()) {
-                sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=newsread-microservices-application"
-            } else {
-                bat "\"${scannerHome}\\bin\\sonar-scanner\" -Dsonar.projectKey=newsread-microservices-application"
-            }
+          bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=newsread-microservices-application"
         }
       }
     }
