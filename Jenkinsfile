@@ -32,8 +32,8 @@ pipeline {
         stage('Containerize And Test') {
             steps {
                 script{
-                    sh 'docker run -d  --name customize-service -e FLASK_APP=run.py kelvinskell/newsread-customize && sleep 10 && docker logs customize-service && docker stop customize-service'
-                    sh 'docker run -d  --name news-service -e FLASK_APP=run.py kelvinskell/newsread-news && sleep 10 && docker logs news-service && docker stop news-service'
+                    bat 'docker run -d  --name customize-service -e FLASK_APP=run.py kelvinskell/newsread-customize && sleep 10 && docker logs customize-service && docker stop customize-service'
+                    bat 'docker run -d  --name news-service -e FLASK_APP=run.py kelvinskell/newsread-news && sleep 10 && docker logs news-service && docker stop news-service'
                 }
             }
         }
@@ -41,8 +41,8 @@ pipeline {
             steps {
                     script{
                         withCredentials([string(credentialsId: 'DockerHubPass', variable: 'DockerHubPass')]) {
-                        sh 'docker login -u kelvinskell --password ${DockerHubPass}' }
-                        sh 'docker push kelvinskell/newsread-news && docker push kelvinskell/newsread-customize'
+                        bat 'docker login -u kelvinskell --password ${DockerHubPass}' }
+                        bat 'docker push kelvinskell/newsread-news && docker push kelvinskell/newsread-customize'
                }
             }
                  
@@ -50,9 +50,9 @@ pipeline {
 
         //stage('Trivy scan on Docker images'){
           //  steps{
-            //     sh 'TMPDIR=/home/jenkins'
-              //   sh 'trivy image kelvinskell/newsread-news:latest'
-                // sh 'trivy image kelvinskell/newsread-customize:latest'
+            //     bat 'TMPDIR=/home/jenkins'
+              //   bat 'trivy image kelvinskell/newsread-news:latest'
+                // bat 'trivy image kelvinskell/newsread-customize:latest'
         //}
        
    // }
@@ -61,12 +61,12 @@ pipeline {
         post {
         always {
             // Always executed
-                sh 'docker rm news-service'
-                sh 'docker rm customize-service'
+                bat 'docker rm news-service'
+                bat 'docker rm customize-service'
         }
         success {
             // on sucessful execution
-            sh 'docker logout'   
+            bat 'docker logout'   
         }
     }
 }
