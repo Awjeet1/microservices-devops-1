@@ -42,7 +42,7 @@ pipeline {
                     script{
                         withCredentials([string(credentialsId: 'DockerHubPass', variable: 'DockerHubPass')]) {
                         bat 'docker login -u awjeet777 --password ${DockerHubPass}' }
-                        bat 'docker push awjeet777/newsread-news && docker push awjeet777/newsread-customize'
+                        bat 'docker push awjeet777/newsread-news & docker push awjeet777/newsread-customize'
                }
             }
                  
